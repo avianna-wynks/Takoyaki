@@ -188,3 +188,4 @@ console.log(deck1)
 // };
 
 // addingImages("comp");
+console.log("hi")
