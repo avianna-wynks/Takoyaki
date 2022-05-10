@@ -1,0 +1,104 @@
+body {
+  margin-left: 30px;
+  margin-right: 30px;        /* ページ全体のmargin */
+  padding:0px;
+      /* ページ全体のpadding */
+  }
+
+#table {
+  background-color: rgba(60, 150, 40, 0.8);
+  border: 5px solid goldenrod;
+  border-radius: 20px;
+  max-width: 70%;
+  max-height: 48%;
+  width: 900px;
+  height: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  text-align: center;
+  position: relative; 
+}
+
+.card-back {
+  border: 5px solid darkblue;
+  height: 85px;
+  width: 55px;
+  text-align: center;
+  margin-top: 20px;
+  padding: auto;
+  border: solid;
+  background-color: white;
+} 
+
+.card-front
+{ 
+  height: 85px;
+  width: 55px;
+  text-align: center;
+  margin-top: 20px;
+  padding: auto;
+} 
+
+.userPan {
+  height: 180px;
+  width: 300px;
+  margin-bottom: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content: center;
+}
+
+.compPan {
+  height: 180px;
+  width: 300px; 
+  margin-left: auto;
+  margin-right: auto;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content: center;
+}
+
+img {
+  height: 105px;
+  width: 75px;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 20px;
+  
+}
+
+#deck {
+  border: solid;
+  display: grid;
+  width: 100px;
+  height: 90px;
+  /* transform: rotate(90deg); */
+  margin-left: auto;
+  margin-right: auto; 
+  text-align: center; 
+}
+
+#cards {
+  display: inline-block;
+  width:120px; /*幅*/
+  height: 180px; /*高さ*/
+}
+
+#StartResetButton {
+  text-align: center;
+  margin-top: 2em;
+  margin-bottom: 1em;
+
+}
+
+.buttons {
+  background-color: rgb(255,105,180);
+  border-radius: 10px;
+  color: white;
+  font-size: 24px;
+  margin: 5px 200px 5px;
+}
+
