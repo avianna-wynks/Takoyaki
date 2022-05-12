@@ -1,64 +1,103 @@
 body {
   margin-left: 30px;
-  margin-right: 30px;        /* ページ全体のmargin */
+  margin-right: 30px;       
   padding:0px;
-      /* ページ全体のpadding */
   }
 
-#table {
+.table {
   background-color: rgba(60, 150, 40, 0.8);
   border: 5px solid goldenrod;
   border-radius: 20px;
   max-width: 70%;
   max-height: 48%;
   width: 900px;
-  height: 550px;
+  height: 580px;
   margin-left: auto;
   margin-right: auto;
-  justify-content: center;
-  text-align: center;
-  position: relative; 
+  /*text-align: center; */
+    display: grid; 
+    grid-template-columns: 25% 25% 25% 25%; 
+    grid-template-rows: 35% 30% 35%; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      ". compPan compPan ."
+      ". deck drawCard discardCard"
+      ". userPan userPan ."; 
+  }
+
+  .deck { display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 15% 85%; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "."
+      "."; 
+    grid-area: deck; }
+  
+    .deckcards {
+      margin-top: 3rem;
+      position: absolute;
+    }
+
+  .drawCard { grid-area: drawCard; }
+  .discardCard { grid-area: discardCard;
 }
+  .discarded {
+    position: absolute;
+  }
+  .userPan {
+    display: grid; 
+    grid-template-columns: 20% 20% 20% 20% 20%; 
+    grid-template-rows: 50% 50%; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      ". . . . ."
+      ". . . . ."; 
+    grid-area: userPan; 
+  }
 
-.card-back {
-  border: 5px solid darkblue;
-  height: 85px;
-  width: 55px;
-  text-align: center;
-  margin-top: 20px;
-  padding: auto;
-  border: solid;
-  background-color: white;
-} 
-
-.card-front
-{ 
-  height: 85px;
-  width: 55px;
-  text-align: center;
-  margin-top: 20px;
-  padding: auto;
-} 
-
-.userPan {
-  height: 180px;
-  width: 300px;
-  margin-bottom: 0 auto;
-  margin-left: auto;
-  margin-right: auto;
+/* 
+.compPan { grid-area: compPan;
   display:flex;
   flex-wrap:wrap;
-  justify-content: center;
-}
-
+  justify-content: center;  
+} */
 .compPan {
-  height: 180px;
-  width: 300px; 
-  margin-left: auto;
-  margin-right: auto;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content: center;
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+  grid-template-rows: 50% 50%; 
+  gap: 1px 1px; 
+  grid-template-areas: 
+    ". . . . ."
+    ". . . . ."; 
+  grid-area: compPan; 
+}
+
+
+.deck { grid-area: deck; 
+margin-left: 50px;
+margin-top: 10px;}
+
+.drawCard { grid-area: drawCard; 
+  margin-top: 25px;
+}
+
+.discardCard {
+  display: grid;  
+  margin-top: 20px;
+  background-color: rgba(90, 152, 76, 0.8) ;
+  grid-template-columns: 60% 40%; 
+  grid-template-rows: 62.7% 37.3%; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "cards ."
+    ". ."; 
+  grid-area: discardCard; 
+}
+
+.cards { 
+  grid-area: cards;
+   
 }
 
 img {
@@ -66,39 +105,56 @@ img {
   width: 75px;
   text-align: center;
   color: #2c3e50;
-  margin-top: 20px;
+  margin-top: 5px;
   
 }
 
-#deck {
+.card-back {
+  border: 5px solid darkblue;
+  height: 92px;
+  width: 60px;
+  text-align: center;
+  padding: auto;
   border: solid;
-  display: grid;
-  width: 100px;
-  height: 90px;
-  /* transform: rotate(90deg); */
-  margin-left: auto;
-  margin-right: auto; 
-  text-align: center; 
-}
+  background-color: white;
+} 
 
-#cards {
+.card-front
+{ 
+  
+  height: 100px;
+  width: 68px;
+  text-align: center;
+  margin-top: 3px;
+  padding: auto;
+} 
+
+/* #cards {
   display: inline-block;
-  width:120px; /*幅*/
-  height: 180px; /*高さ*/
-}
+  width:120px; 
+  height: 180px; }
+*/
 
 #StartResetButton {
   text-align: center;
-  margin-top: 2em;
-  margin-bottom: 1em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
 
 }
 
 .buttons {
-  background-color: rgb(255,105,180);
+  background-color: rgb(197, 92, 144);
   border-radius: 10px;
   color: white;
   font-size: 24px;
   margin: 5px 200px 5px;
 }
+
+.drawButton {
+  background-color: rgb(111, 58, 85);
+  width: 5em;
+  color: white;
+}
+
+
 

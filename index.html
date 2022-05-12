@@ -8,20 +8,21 @@
   </head>
   <body>
     <div id="StartResetButton">
-      <button id="startButton" class="buttons">START</button>
-      <button class="buttons">RESET</button>
+      <button id="startButton" class="buttons" onclick="disabled = true;">START</button>
+      <button id="reset" class="buttons">RESET</button>
     </div>
-    <main id="table">
-      <side></side>
-      <div id="comp" class="compPan">
+    <div id="table" class="table">
+      <div class="deck">
+        <button class="drawButton">Draw</button>
       </div>
-      <div id="deck">
-        <div id="discardCards">
-          
-        </div>
-      </div>
-      <div id="user" class="userPan"></div>
-    </main>
+      <div class="drawCard"></div>
+      <div class="discardCard"></div>
+      <div class="userPan">
+        <div class="userPanCards"></div>
+    </div>
+      
+      <div class="compPan"></div>
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
