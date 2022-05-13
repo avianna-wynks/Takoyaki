@@ -5,10 +5,10 @@ import "./style.css";
 let initialUserHand = [];
 let currentUserHand = [];
 let initialCompHand = [];
-let CurrentCompHand = [];
+let currentCompHand = [];
 let drawCard = [];
 let discardedCards = [];
-let currentUser = [];
+let currentPlayer = [];
 class Deck {
   constructor() {
     this.deck = [];
@@ -174,8 +174,9 @@ class Deck {
       console.log("no");
     } else if (numOfDrawCard === "K") {
       console.log("no");
-    } 
-    else {
+    } else if (drawCard.length === 0) {
+        console.log("Draw a card");
+    } else {
         for (let el = 0; el < currentUserHand.length; el++) {
             if (currentUserHand[el][1] === "T"){
                 if (numOfDrawCard === 10) {
@@ -212,15 +213,75 @@ class Deck {
       drawnCardw2.appendChild(newDivforDrawCard);
     }
   }
+/////////////////////////////////////////
+  //Comp Move *might delete
+/////////////////////////////////////////
+  compPanCards () {
+    let joinDrawCard4 = drawCard.join("");
+    const insideDrawCard4 = joinDrawCard4.split("");
+
+    let numOfDrawCard2 = insideDrawCard4[1];
+    if (numOfDrawCard2 === "T") {
+      numOfDrawCard2 = 10;
+    }
+    
+    if (numOfDrawCard2 === "J") {
+      console.log("no");
+    } else if (numOfDrawCard2 === "Q") {
+      console.log("no");
+    } else if (numOfDrawCard2 === "K") {
+      console.log("no");
+    } else if (drawCard.length === 0) {
+        console.log("Draw a card");
+    } else {
+        for (let el = 0; el < currentCompHand.length; el++) {
+            if (currentCompHand[el][1] === "T"){
+                if (numOfDrawCard2 === 10) {
+                    console.log("no");
+                    return false;
+                }
+            }
+            if (currentCompHand[el][1] === numOfDrawCard2) {
+                console.log("no");
+                return false
+            }
+          }
+      const newInitCard2 = initialCompHand.slice();
+      const selectedCompCard2 = newInitCard2[numOfDrawCard2 - 1];
+      drawCard.push(selectedCompCard2);
+      const currentDrawCard2 = drawCard.shift();
+      currentCompHand.splice(numOfDrawCard2 - 1, 0, currentDrawCard2);
+      const whichDiv = document.getElementById("compPan");
+      whichDiv.children[numOfDrawCard2 - 1].remove();
+      const createNewDivForComp = document.createElement("div");
+      const whereToInsertNewDiv = document.querySelector(".compPan");
+      createNewDivForComp.setAttribute("id", currentDrawCard2);
+      createNewDivForComp.setAttribute("class", "compPanCards");
+      createNewDivForComp.innerHTML = `<img src="pics/${currentDrawCard2}.png" class="card-front"></img>`;
+      whereToInsertNewDiv.insertBefore(
+        createNewDivForComp,
+        whichDiv.children[numOfDrawCard2 - 1]
+      );
+      document.getElementById(currentDrawCard2).remove();
+      const newDivforDrawCard2 = document.createElement("div");
+      const drawnCardw2 = document.querySelector(".drawCard");
+      newDivforDrawCard2.setAttribute("id", selectedCompCard2);
+      newDivforDrawCard2.innerHTML = `<img src="pics/${selectedCompCard2}.png" class="card-front"></img>`;
+      drawnCardw2.appendChild(newDivforDrawCard2);
+    }
+    checkingWinner(); 
+  }
+
 }
 
-// const nextDrawCard = userHand.shift()
-// drawCard.push(nextDrawCard)
-
-// console.log(/* bigNumbers.some(element => element !== numOfDrawCard) &&*/ insdeUserHand2.some(element2 => element2 !== numOfDrawCard))
-
-// if (bigNumbers.some(element => element !== numOfDrawCard) && insdeUserHand2.some(element2 => element2 !== numOfDrawCard)) {
-
+///////////////////////////
+// GAME START
+//////////////////////////
+const deck1 = new Deck();
+deck1.shuffle();
+deck1.dealCards();
+// deck1.checkingWinner();
+//////////////////////////
 const hands = () => {
   dealToUser();
   dealToComp();
@@ -251,30 +312,59 @@ const dealToUser = () => {
       '<img src="pics/card_back.png" class="card-back"> </img>';
   }
 
-  //       for (let cardCount1 in userHand) {
-  //         for (let numbers in UserCardsNumber) {
-  //         const aaa = document.getElementById(userHand[cardCount1])
-  //         aaa.classList.add(UserCardsNumber[numbers])
-  // }}
 };
 
-const deck1 = new Deck();
-deck1.shuffle();
-deck1.dealCards();
+const checkingWinnerUser = () => {
+    if (currentUserHand.length === 10) {
+        for (let t in currentUserHand) {
+          let takoNumber = currentUserHand[t];
+          console.log(takoNumber)
+        const winnerWindowUser = document.getElementById(takoNumber);
+        winnerWindowUser.innerHTML = '<img src = "pics/takoyaki.png"></img>';
+        }
+        console.log("You win!");
+        return;
+    }
+}
+
+const checkingWinnerComp = () => {
+    if (currentCompHand.length === 10) {
+        const winnerWindowComp = document.createElement('div');
+        winnerWindowComp.setAttribute("id" , "winnerIsComp")
+        console.log("Computer win!");
+        return;
+    }  
+
+}
+
+///////////////////////////
+// User Button Moves
+///////////////////////////
+document.getElementById("startButton").addEventListener("click", hands);
 
 document.querySelector(".drawButton").addEventListener("click", () => {
   deck1.drawCards();
 });
+
 document.querySelector(".discardCard").addEventListener("click", () => {
   deck1.discardCards();
 });
 
 document.querySelector(".userPan").addEventListener("click", () => {
-  deck1.userPanCards();
+    deck1.userPanCards();
+    checkingWinnerUser();
 });
 
+document.querySelector(".compPan").addEventListener("click", () => {
+    checkingWinnerComp();
+    deck1.compPanCards();
+    
+    
+    
+  });
 
-document.getElementById("startButton").addEventListener("click", hands);
+
+
 
 // placecard でshuffledDeckの中から10枚ずつくばる
 // デックを光らせる（css）

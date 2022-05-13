@@ -21,10 +21,10 @@ body {
     gap: 0px 0px; 
     grid-template-areas: 
       ". compPan compPan ."
-      ". deck drawCard discardCard"
+      " tako deck drawCard discardCard"
       ". userPan userPan ."; 
   }
-
+  
   .deck { display: grid; 
     grid-template-columns: 1fr; 
     grid-template-rows: 15% 85%; 
@@ -77,6 +77,20 @@ body {
 .deck { grid-area: deck; 
 margin-left: 50px;
 margin-top: 10px;}
+
+.tako {
+  /* background-image: url(pics/tako.png);
+  background-repeat:  no-repeat;  */
+  grid-area: tako;
+}
+
+.takochan {
+  transform: rotate(20deg);
+  height: 200px;
+  width: 200px;
+  margin-left: 1rem;
+
+}
 
 .drawCard { grid-area: drawCard; 
   margin-top: 25px;
@@ -155,6 +169,5 @@ img {
   width: 5em;
   color: white;
 }
-
 
 
