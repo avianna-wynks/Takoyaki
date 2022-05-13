@@ -4,15 +4,31 @@ import "./style.css";
 
 let initialUserHand = [];
 let currentUserHand = [];
-let compHand = [];
+let initialCompHand = [];
+let CurrentCompHand = [];
 let drawCard = [];
 let discardedCards = [];
+let currentUser = [];
 class Deck {
   constructor() {
     this.deck = [];
 
     const suits = ["H", "D", "C", "S"];
-    const ranks = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"];
+    const ranks = [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "T",
+      "J",
+      "Q",
+      "K",
+    ];
 
     for (let suit in suits) {
       for (let rank in ranks) {
@@ -28,7 +44,6 @@ class Deck {
       deck[cards] = deck[randomNumber];
       deck[randomNumber] = tmp;
     }
-    console.log(this.deck)
     return deck;
   }
   creatingDeck() {
@@ -91,122 +106,120 @@ class Deck {
         this.deck.splice(i, 1);
       }
       if (i >= 10) {
-        compHand.push(selectedCards);
+        initialCompHand.push(selectedCards);
         this.deck.splice(i, 1);
       }
     }
   }
   drawCards() {
-    if(drawCard.length === 0){
-    const card = this.deck.pop();
-    drawCard.push(card);
-    const toRemove = document.getElementById(card);
-    toRemove.remove();
-    const drawnCard = document.querySelector(".drawCard").appendChild(toRemove);
-    drawnCard.innerHTML = `<img src="pics/${card}.png" class="card-front"></img>`;
-    drawnCard.classList.remove("deckcards");
-    drawnCard.classList.add("drawCards");
-    return this.deck;
-    
-}
-  }
-
+    if (drawCard.length === 0) {
+      const card = this.deck.pop();
+      drawCard.push(card);
+      const toRemove = document.getElementById(card);
+      toRemove.remove();
+      const drawnCard = document
+        .querySelector(".drawCard")
+        .appendChild(toRemove);
+      drawnCard.innerHTML = `<img src="pics/${card}.png" class="card-front"></img>`;
+      drawnCard.classList.remove("deckcards");
+      drawnCard.classList.add("drawCards");
+      return this.deck;
+    }
+  } 
 
   discardCards() {
     let joinDrawCard = drawCard.join("");
-    const insideDrawCard = joinDrawCard.split("")
+    const insideDrawCard = joinDrawCard.split("");
     let joinUserCard = currentUserHand.join("");
-    const insideUserHand = joinUserCard.split("")
+    const insideUserHand = joinUserCard.split("");
     // console.log(insideUserHand.some(element1 => element1 === insideDrawCard[1]))
 
-    const bigNumbers = ["J", "Q", "K"]
-     if (bigNumbers.some(element => element === insideDrawCard[1]) || insideUserHand.some(element1 => element1 === insideDrawCard[1])) 
-     {
-        // console.log(bigNumbers.some(element => element === insideDrawCard[1]))
-    const cardD = drawCard.pop();
-    discardedCards.push(cardD);
-    const toThrow = document.getElementById(cardD);
-    toThrow.remove();
-    const discard = document.querySelector(".discardCard").appendChild(toThrow);
-    discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
-    discard.classList.remove("drawCards");
-    discard.classList.add("discarded");
+    const bigNumbers = ["J", "Q", "K"];
+    if (
+      bigNumbers.some((element) => element === insideDrawCard[1]) ||
+      insideUserHand.some((element1) => element1 === insideDrawCard[1])
+    ) {
+      // console.log(bigNumbers.some(element => element === insideDrawCard[1]))
+      const cardD = drawCard.pop();
+      discardedCards.push(cardD);
+      const toThrow = document.getElementById(cardD);
+      toThrow.remove();
+      const discard = document
+        .querySelector(".discardCard")
+        .appendChild(toThrow);
+      discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
+      discard.classList.remove("drawCards");
+      discard.classList.add("discarded");
     }
-// console.log(drawCard)
-// console.log(initialUserHand)
+/////////////////////////////////
+// switch turn
+////////////////////////////////
   }
 
   userPanCards() {
     let joinDrawCard2 = drawCard.join("");
-    const insideDrawCard2 = joinDrawCard2.split("")
+    const insideDrawCard2 = joinDrawCard2.split("");
     // console.log(insideDrawCard2);
-    let joinUserCard2 = currentUserHand.join("");
-    const insdeUserHand2 = joinUserCard2.split("")
-    console.log(insdeUserHand2)
-    let numOfDrawCard = insideDrawCard2[1] 
+    // let joinUserCard2 = currentUserHand.join("");
+    // const insideUserHand2 = joinUserCard2.split("")
+    // console.log(insideUserHand2)
+    let numOfDrawCard = insideDrawCard2[1];
     if (numOfDrawCard === "T") {
-        numOfDrawCard = 10
+      numOfDrawCard = 10;
     }
-    console.log(numOfDrawCard)
-    console.log(insdeUserHand2)
-    console.log(numOfDrawCard)
-    let bigNumbers = ["J", "Q", "K"]
-    console.log(/* bigNumbers.some(element => element !== numOfDrawCard) &&*/ insdeUserHand2.some(element2 => element2 !== numOfDrawCard))
     
-        if (bigNumbers.some(element => element !== numOfDrawCard) && insdeUserHand2.some(element2 => element2 !== numOfDrawCard)) {
-            // insideDrawCard2.some(element2 => element2 !== insdeUserHand2[1]
-        const newInitCard = initialUserHand.slice();
-        const selectedUserCard = newInitCard[numOfDrawCard -1];
-        drawCard.push(selectedUserCard);
-        const currentDrawCard = drawCard.shift();
-        currentUserHand.splice(numOfDrawCard-1,0, currentDrawCard);
-        const whichDiv = document.getElementById("userPan");
-        whichDiv.children[numOfDrawCard-1].remove()
-        const createNewDivForUser = document.createElement("div");
-        const whereToInsertNewDiv = document.querySelector(".userPan")
-        createNewDivForUser.setAttribute("id", currentDrawCard);
-        createNewDivForUser.setAttribute("class", "userPanCards")
-        createNewDivForUser.innerHTML = `<img src="pics/${currentDrawCard}.png" class="card-front"></img>`
-    
-        whereToInsertNewDiv.insertBefore(createNewDivForUser, whichDiv.children[numOfDrawCard-1])
-        document.getElementById(currentDrawCard).remove()
-        const newDivforDrawCard = document.createElement('div');
-        const drawnCardw2 = document.querySelector(".drawCard");
-        newDivforDrawCard.setAttribute("id", selectedUserCard);
-        newDivforDrawCard.innerHTML = `<img src="pics/${selectedUserCard}.png" class="card-front"></img>`
-        drawnCardw2.appendChild(newDivforDrawCard)
+    if (numOfDrawCard === "J") {
+      console.log("no");
+    } else if (numOfDrawCard === "Q") {
+      console.log("no");
+    } else if (numOfDrawCard === "K") {
+      console.log("no");
     } 
-
-    // const nextDrawCard = userHand.shift()    
-    // drawCard.push(nextDrawCard)
-    
-
-
-
-};
-
+    else {
+        for (let el = 0; el < currentUserHand.length; el++) {
+            if (currentUserHand[el][1] === "T"){
+                if (numOfDrawCard === 10) {
+                    console.log("no");
+                    return false;
+                }
+            }
+            if (currentUserHand[el][1] === numOfDrawCard) {
+                console.log("no");
+                return false
+            }
+          }
+      const newInitCard = initialUserHand.slice();
+      const selectedUserCard = newInitCard[numOfDrawCard - 1];
+      drawCard.push(selectedUserCard);
+      const currentDrawCard = drawCard.shift();
+      currentUserHand.splice(numOfDrawCard - 1, 0, currentDrawCard);
+      const whichDiv = document.getElementById("userPan");
+      whichDiv.children[numOfDrawCard - 1].remove();
+      const createNewDivForUser = document.createElement("div");
+      const whereToInsertNewDiv = document.querySelector(".userPan");
+      createNewDivForUser.setAttribute("id", currentDrawCard);
+      createNewDivForUser.setAttribute("class", "userPanCards");
+      createNewDivForUser.innerHTML = `<img src="pics/${currentDrawCard}.png" class="card-front"></img>`;
+      whereToInsertNewDiv.insertBefore(
+        createNewDivForUser,
+        whichDiv.children[numOfDrawCard - 1]
+      );
+      document.getElementById(currentDrawCard).remove();
+      const newDivforDrawCard = document.createElement("div");
+      const drawnCardw2 = document.querySelector(".drawCard");
+      newDivforDrawCard.setAttribute("id", selectedUserCard);
+      newDivforDrawCard.innerHTML = `<img src="pics/${selectedUserCard}.png" class="card-front"></img>`;
+      drawnCardw2.appendChild(newDivforDrawCard);
+    }
   }
+}
 
+// const nextDrawCard = userHand.shift()
+// drawCard.push(nextDrawCard)
 
-const deck1 = new Deck();
-deck1.shuffle();
-deck1.dealCards();
+// console.log(/* bigNumbers.some(element => element !== numOfDrawCard) &&*/ insdeUserHand2.some(element2 => element2 !== numOfDrawCard))
 
-
-document.querySelector(".drawButton").addEventListener("click", () => {
-  deck1.drawCards();
-
-});
-document.querySelector(".discardCard").addEventListener("click", () => {
-  deck1.discardCards();
-});
-
-document.querySelector(".userPan").addEventListener("click", () => {
-    deck1.userPanCards() 
-})
-
-// deck1.placeCardsToPan();
-
+// if (bigNumbers.some(element => element !== numOfDrawCard) && insdeUserHand2.some(element2 => element2 !== numOfDrawCard)) {
 
 const hands = () => {
   dealToUser();
@@ -214,8 +227,8 @@ const hands = () => {
   deck1.creatingDeck();
 };
 const dealToComp = () => {
-  for (let cardCount2 in compHand) {
-    let tempNumber = compHand[cardCount2];
+  for (let cardCount2 in initialCompHand) {
+    let tempNumber = initialCompHand[cardCount2];
     let compCards = document.createElement("div");
     compCards.setAttribute("id", tempNumber);
     // compCards.setAttribute("class", "cards");
@@ -227,7 +240,7 @@ const dealToComp = () => {
   }
 };
 const dealToUser = () => {
-    document.querySelector(".userPanCards").remove()
+  document.querySelector(".userPanCards").remove();
   for (let cardCount in initialUserHand) {
     let usersCards = document.createElement("div");
     usersCards.setAttribute("id", initialUserHand[cardCount]);
@@ -237,17 +250,31 @@ const dealToUser = () => {
     insertCardBack.innerHTML =
       '<img src="pics/card_back.png" class="card-back"> </img>';
   }
- 
-//       for (let cardCount1 in userHand) {
-//         for (let numbers in UserCardsNumber) {
-//         const aaa = document.getElementById(userHand[cardCount1])
-//         aaa.classList.add(UserCardsNumber[numbers])
-// }}
+
+  //       for (let cardCount1 in userHand) {
+  //         for (let numbers in UserCardsNumber) {
+  //         const aaa = document.getElementById(userHand[cardCount1])
+  //         aaa.classList.add(UserCardsNumber[numbers])
+  // }}
 };
 
+const deck1 = new Deck();
+deck1.shuffle();
+deck1.dealCards();
+
+document.querySelector(".drawButton").addEventListener("click", () => {
+  deck1.drawCards();
+});
+document.querySelector(".discardCard").addEventListener("click", () => {
+  deck1.discardCards();
+});
+
+document.querySelector(".userPan").addEventListener("click", () => {
+  deck1.userPanCards();
+});
+
+
 document.getElementById("startButton").addEventListener("click", hands);
-
-
 
 // placecard でshuffledDeckの中から10枚ずつくばる
 // デックを光らせる（css）
@@ -258,4 +285,3 @@ document.getElementById("startButton").addEventListener("click", hands);
 //　自分のカードのおけるところが光る→クリックできる
 //
 // comp側,user側にカードのimg 10個置く
-
