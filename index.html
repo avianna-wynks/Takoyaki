@@ -7,13 +7,16 @@
     <title>Takoyaki</title>
   </head>
   <body>
-    <div id="StartResetButton">
+    <div class="container">
+      <div id= "side" class="side">
+      </div>
+    <div class="StartResetButton">
       <button id="startButton" class="buttons" onclick="disabled = true;">START</button>
       <button id="reset" class="buttons">RESET</button>
     </div>
     <div id="table" class="table">
       <div class="deck">
-        <button class="drawButton">Draw</button>
+        <button id= "drawButton" class="drawButton" disabled = true;>Draw</button>
       </div>
       <div class="tako">
         <img src="pics/tako.png" class="takochan">
@@ -26,5 +29,6 @@
       <div id = "compPan" class="compPan"></div>
     </div>
     <script type="module" src="/main.js"></script>
+  </div>
   </body>
 </html>

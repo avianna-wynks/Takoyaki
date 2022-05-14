@@ -8,8 +8,20 @@ let initialCompHand = [];
 let currentCompHand = [];
 let drawCard = [];
 let discardedCards = [];
-let currentPlayer = [];
+let currentPlayer = ""
+
 class Deck {
+
+  chooseTurn () {
+    const rndmNumber = Math.floor(Math.random() * 2);
+    if (rndmNumber === 1) {
+      currentPlayer = "user"
+    } else {
+      currentPlayer = "comp"
+    }
+    console.log(currentPlayer)
+    } 
+
   constructor() {
     this.deck = [];
 
@@ -124,17 +136,19 @@ class Deck {
       drawnCard.classList.remove("deckcards");
       drawnCard.classList.add("drawCards");
       return this.deck;
+    } else {
+      return false;
     }
-  } 
+    }
 
   discardCards() {
+ 
     let joinDrawCard = drawCard.join("");
     const insideDrawCard = joinDrawCard.split("");
-    let joinUserCard = currentUserHand.join("");
-    const insideUserHand = joinUserCard.split("");
-    // console.log(insideUserHand.some(element1 => element1 === insideDrawCard[1]))
-
     const bigNumbers = ["J", "Q", "K"];
+    if (currentPlayer === "user") {
+      let joinUserCard = currentUserHand.join("");
+      const insideUserHand = joinUserCard.split("");
     if (
       bigNumbers.some((element) => element === insideDrawCard[1]) ||
       insideUserHand.some((element1) => element1 === insideDrawCard[1])
@@ -144,19 +158,39 @@ class Deck {
       discardedCards.push(cardD);
       const toThrow = document.getElementById(cardD);
       toThrow.remove();
-      const discard = document
-        .querySelector(".discardCard")
-        .appendChild(toThrow);
+      const discard = document.querySelector(".discardCard").appendChild(toThrow);
       discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
       discard.classList.remove("drawCards");
       discard.classList.add("discarded");
-    }
-/////////////////////////////////
-// switch turn
-////////////////////////////////
+      currentPlayer = "comp";}
+    
+  }
+
+    else {
+      let joinCompCard = currentCompHand.join("");
+      const insideCompHand = joinCompCard.split("");
+      if (
+        bigNumbers.some((element) => element === insideDrawCard[1]) ||
+        insideCompHand.some((element1) => element1 === insideDrawCard[1])
+      ) {
+        // console.log(bigNumbers.some(element => element === insideDrawCard[1]))
+        const cardD = drawCard.pop();
+        discardedCards.push(cardD);
+        const toThrow = document.getElementById(cardD);
+        toThrow.remove();
+        const discard = document
+          .querySelector(".discardCard")
+          .appendChild(toThrow);
+        discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
+        discard.classList.remove("drawCards");
+        discard.classList.add("discarded");
+        currentPlayer = "user";}
+      }
+console.log(currentPlayer);
   }
 
   userPanCards() {
+    if (currentPlayer === "user") {
     let joinDrawCard2 = drawCard.join("");
     const insideDrawCard2 = joinDrawCard2.split("");
     // console.log(insideDrawCard2);
@@ -212,11 +246,13 @@ class Deck {
       newDivforDrawCard.innerHTML = `<img src="pics/${selectedUserCard}.png" class="card-front"></img>`;
       drawnCardw2.appendChild(newDivforDrawCard);
     }
+    }
   }
 /////////////////////////////////////////
-  //Comp Move *might delete
+  //Comp Move 
 /////////////////////////////////////////
-  compPanCards () {
+  compPanCards () { 
+    if (currentPlayer === "comp") {
     let joinDrawCard4 = drawCard.join("");
     const insideDrawCard4 = joinDrawCard4.split("");
 
@@ -269,9 +305,8 @@ class Deck {
       newDivforDrawCard2.innerHTML = `<img src="pics/${selectedCompCard2}.png" class="card-front"></img>`;
       drawnCardw2.appendChild(newDivforDrawCard2);
     }
-    checkingWinner(); 
   }
-
+  }
 }
 
 ///////////////////////////
@@ -280,12 +315,14 @@ class Deck {
 const deck1 = new Deck();
 deck1.shuffle();
 deck1.dealCards();
-// deck1.checkingWinner();
+deck1.chooseTurn (); 
 //////////////////////////
 const hands = () => {
   dealToUser();
   dealToComp();
   deck1.creatingDeck();
+  document.getElementById("drawButton").disabled = false;
+
 };
 const dealToComp = () => {
   for (let cardCount2 in initialCompHand) {
@@ -326,11 +363,14 @@ const checkingWinnerUser = () => {
         return;
     }
 }
-
 const checkingWinnerComp = () => {
     if (currentCompHand.length === 10) {
-        const winnerWindowComp = document.createElement('div');
-        winnerWindowComp.setAttribute("id" , "winnerIsComp")
+      for (let tt in currentCompHand) {
+        setInterval(() => {
+        let takoNumberComp = currentCompHand[tt];
+      const winnerWindowComp = document.getElementById(takoNumberComp);
+      winnerWindowComp.innerHTML = '<img src = "pics/takoyaki.png"></img>';}
+      ), 300}
         console.log("Computer win!");
         return;
     }  
@@ -356,22 +396,15 @@ document.querySelector(".userPan").addEventListener("click", () => {
 });
 
 document.querySelector(".compPan").addEventListener("click", () => {
-    checkingWinnerComp();
     deck1.compPanCards();
-    
-    
-    
+    checkingWinnerComp();   
   });
 
+//   const compAuto = () => {
+//   if (currentPlayer === "comp") {
+//     deck1.drawCards();
+//     deck1.discardCards();
+//     deck1.compPanCards();
+// }}
 
-
-
-// placecard でshuffledDeckの中から10枚ずつくばる
-// デックを光らせる（css）
-// Deckをクリックしたら一番最初のカードをフリップ→deckの右側におく
-// 自分のカードのおけるところが光る→クリックできる (class "here"をつけて”here"のcssで光るのを作る)
-//　クリックするとそこにあるカードをフリップしてリプレイスする
-//　もしフリップしたカードが１−１０の間＆＆まだ持ってないカードなら
-//　自分のカードのおけるところが光る→クリックできる
-//
-// comp側,user側にカードのimg 10個置く
+// compAuto();
