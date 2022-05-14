@@ -15,7 +15,7 @@ body {
   }
 
   .container {  display: grid;
-    grid-template-columns:10% 90%;
+    grid-template-columns:20% 80%;
     grid-template-rows: 10% 90%;
     gap: 0px 0px;
     grid-auto-flow: row;
@@ -28,8 +28,24 @@ body {
     margin-bottom: 0.1rem;
     grid-area: StartResetButton; }
   
-  .side { grid-area: side; }
-  
+
+ .comp {
+  background: 50% 20%;
+  margin-left: 5rem;
+  margin-left: 3rem;
+  background-image: url(pics/arrow_right.png);
+  background-repeat:  no-repeat; 
+  grid-area: side; 
+ }
+ 
+ .user {
+  background: 50% 80%;
+  margin-left: 3rem;
+  background-image: url(pics/arrow_right.png);
+  background-repeat:  no-repeat; 
+  grid-area: side; 
+ }
+
 .table {
   background-color: rgba(60, 150, 40, 0.8);
   border: 5px solid goldenrod;
@@ -38,7 +54,7 @@ body {
   max-height: 95%;
   width: 900px;
   height: 580px;
-  margin-left: 5rem;
+  margin-left: 1rem;
   margin-right: auto;
     display: grid; 
     grid-template-columns: 25% 25% 25% 25%; 

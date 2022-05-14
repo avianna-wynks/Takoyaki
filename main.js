@@ -1,29 +1,30 @@
 import "./style.css";
 
-// Deckを作る
-
+let deck =[];
 let initialUserHand = [];
 let currentUserHand = [];
 let initialCompHand = [];
 let currentCompHand = [];
 let drawCard = [];
 let discardedCards = [];
-let currentPlayer = ""
+let currentPlayer = "";
 
-class Deck {
-
-  chooseTurn () {
+//////////////////////////
+//Things around deck
+/////////////////////////
+// class Deck {
+  const chooseTurn = () => {
     const rndmNumber = Math.floor(Math.random() * 2);
     if (rndmNumber === 1) {
-      currentPlayer = "user"
+      currentPlayer = "user";
     } else {
-      currentPlayer = "comp"
+      currentPlayer = "comp";
     }
-    console.log(currentPlayer)
-    } 
+    console.log(currentPlayer);
+  }
 
-  constructor() {
-    this.deck = [];
+  // constructor() {
+  //   this.deck = [];
 
     const suits = ["H", "D", "C", "S"];
     const ranks = [
@@ -41,15 +42,16 @@ class Deck {
       "Q",
       "K",
     ];
-
+    const createdeckCards = () =>{
     for (let suit in suits) {
       for (let rank in ranks) {
-        this.deck.push(`${suits[suit]}${ranks[rank]}`);
+        deck.push(`${suits[suit]}${ranks[rank]}`);
       }
     }
   }
-  shuffle() {
-    const deck = this.deck;
+
+  const shuffle = () => {
+    // const deck = this.deck;
     for (let cards in deck) {
       let tmp = deck[cards];
       const randomNumber = Math.floor(Math.random() * 52);
@@ -58,47 +60,46 @@ class Deck {
     }
     return deck;
   }
-  creatingDeck() {
-    for (let cardCount3 in deck1.deck) {
+  const creatingDeck = () => {
+    for (let cardCount3 in deck) {
       let deckCards = document.createElement("div");
-      // deckCards.setAttribute("class", "card-back");
       if (cardCount3 == 0) {
-        deckCards.setAttribute("id", deck1.deck[cardCount3]);
+        deckCards.setAttribute("id", deck[cardCount3]);
         deckCards.setAttribute("class", "deckcards");
         deckCards.setAttribute(
           "style",
           "transform: translate(-0.06rem, 0rem); z-index:1"
         );
       } else if (cardCount3 == 1) {
-        deckCards.setAttribute("id", deck1.deck[cardCount3]);
+        deckCards.setAttribute("id", deck[cardCount3]);
         deckCards.setAttribute("class", "deckcards");
         deckCards.setAttribute(
           "style",
           "transform: translate(-0.12rem, -0.4rem); z-index:2"
         );
       } else if (cardCount3 == 2) {
-        deckCards.setAttribute("id", deck1.deck[cardCount3]);
+        deckCards.setAttribute("id", deck[cardCount3]);
         deckCards.setAttribute("class", "deckcards");
         deckCards.setAttribute(
           "style",
           "transform: translate(-0.18rem, -0.8rem); z-index:3"
         );
       } else if (cardCount3 == 3) {
-        deckCards.setAttribute("id", deck1.deck[cardCount3]);
+        deckCards.setAttribute("id", deck[cardCount3]);
         deckCards.setAttribute("class", "deckcards");
         deckCards.setAttribute(
           "style",
           "transform: translate(-0.24rem, -1.2rem); z-index:4"
         );
       } else if (cardCount3 == 4) {
-        deckCards.setAttribute("id", deck1.deck[cardCount3]);
+        deckCards.setAttribute("id", deck[cardCount3]);
         deckCards.setAttribute("class", "deckcards");
         deckCards.setAttribute(
           "style",
           "transform: translate(-0.32rem, -1.6rem); z-index:5"
         );
       } else {
-        deckCards.setAttribute("id", deck1.deck[cardCount3]);
+        deckCards.setAttribute("id", deck[cardCount3]);
         deckCards.setAttribute("class", "deckcards");
       }
       // div全部にimg入れる
@@ -110,22 +111,22 @@ class Deck {
     }
   }
 
-  dealCards() {
+  const dealCards = () => {
     for (let i = 0; i < 20; i++) {
-      let selectedCards = this.deck[i];
+      let selectedCards = deck[i];
       if (i < 10) {
         initialUserHand.push(selectedCards);
-        this.deck.splice(i, 1);
+        deck.splice(i, 1);
       }
       if (i >= 10) {
         initialCompHand.push(selectedCards);
-        this.deck.splice(i, 1);
+        deck.splice(i, 1);
       }
     }
   }
-  drawCards() {
+  const drawCards = () => {
     if (drawCard.length === 0) {
-      const card = this.deck.pop();
+      const card = deck.pop();
       drawCard.push(card);
       const toRemove = document.getElementById(card);
       toRemove.remove();
@@ -135,20 +136,20 @@ class Deck {
       drawnCard.innerHTML = `<img src="pics/${card}.png" class="card-front"></img>`;
       drawnCard.classList.remove("deckcards");
       drawnCard.classList.add("drawCards");
-      return this.deck;
+      return deck;
     } else {
       return false;
     }
-    }
+  }
 
-  discardCards() {
- 
-    let joinDrawCard = drawCard.join("");
-    const insideDrawCard = joinDrawCard.split("");
-    const bigNumbers = ["J", "Q", "K"];
-    if (currentPlayer === "user") {
-      let joinUserCard = currentUserHand.join("");
-      const insideUserHand = joinUserCard.split("");
+
+const discardCards = () => {
+  let joinDrawCard = drawCard.join("");
+  const insideDrawCard = joinDrawCard.split("");
+  const bigNumbers = ["J", "Q", "K"];
+  if (currentPlayer === "user") {
+    let joinUserCard = currentUserHand.join("");
+    const insideUserHand = joinUserCard.split("");
     if (
       bigNumbers.some((element) => element === insideDrawCard[1]) ||
       insideUserHand.some((element1) => element1 === insideDrawCard[1])
@@ -158,39 +159,49 @@ class Deck {
       discardedCards.push(cardD);
       const toThrow = document.getElementById(cardD);
       toThrow.remove();
-      const discard = document.querySelector(".discardCard").appendChild(toThrow);
+      const discard = document
+        .querySelector(".discardCard")
+        .appendChild(toThrow);
       discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
       discard.classList.remove("drawCards");
       discard.classList.add("discarded");
-      currentPlayer = "comp";}
-    
+      const changeClass = document.getElementById("side");
+      changeClass.classList.remove("user");
+      changeClass.classList.add("comp");
+      currentPlayer = "comp";
+    }
+  } else {
+    let joinCompCard = currentCompHand.join("");
+    const insideCompHand = joinCompCard.split("");
+    if (
+      bigNumbers.some((element) => element === insideDrawCard[1]) ||
+      insideCompHand.some((element1) => element1 === insideDrawCard[1])
+    ) {
+      // console.log(bigNumbers.some(element => element === insideDrawCard[1]))
+      const cardD = drawCard.pop();
+      discardedCards.push(cardD);
+      const toThrow = document.getElementById(cardD);
+      toThrow.remove();
+      const discard = document
+        .querySelector(".discardCard")
+        .appendChild(toThrow);
+      discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
+      discard.classList.remove("drawCards");
+      discard.classList.add("discarded");
+      const changeClass = document.getElementById("side");
+      changeClass.classList.remove("comp");
+      changeClass.classList.add("user");
+      currentPlayer = "user";
+    }
   }
 
-    else {
-      let joinCompCard = currentCompHand.join("");
-      const insideCompHand = joinCompCard.split("");
-      if (
-        bigNumbers.some((element) => element === insideDrawCard[1]) ||
-        insideCompHand.some((element1) => element1 === insideDrawCard[1])
-      ) {
-        // console.log(bigNumbers.some(element => element === insideDrawCard[1]))
-        const cardD = drawCard.pop();
-        discardedCards.push(cardD);
-        const toThrow = document.getElementById(cardD);
-        toThrow.remove();
-        const discard = document
-          .querySelector(".discardCard")
-          .appendChild(toThrow);
-        discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
-        discard.classList.remove("drawCards");
-        discard.classList.add("discarded");
-        currentPlayer = "user";}
-      }
-console.log(currentPlayer);
-  }
-
-  userPanCards() {
-    if (currentPlayer === "user") {
+  console.log(currentPlayer);
+};
+//////////////////////////////
+//User Move
+/////////////////////////////
+const userPanCards = () => {
+  if (currentPlayer === "user") {
     let joinDrawCard2 = drawCard.join("");
     const insideDrawCard2 = joinDrawCard2.split("");
     // console.log(insideDrawCard2);
@@ -201,7 +212,7 @@ console.log(currentPlayer);
     if (numOfDrawCard === "T") {
       numOfDrawCard = 10;
     }
-    
+
     if (numOfDrawCard === "J") {
       console.log("no");
     } else if (numOfDrawCard === "Q") {
@@ -209,20 +220,20 @@ console.log(currentPlayer);
     } else if (numOfDrawCard === "K") {
       console.log("no");
     } else if (drawCard.length === 0) {
-        console.log("Draw a card");
+      console.log("Draw a card");
     } else {
-        for (let el = 0; el < currentUserHand.length; el++) {
-            if (currentUserHand[el][1] === "T"){
-                if (numOfDrawCard === 10) {
-                    console.log("no");
-                    return false;
-                }
-            }
-            if (currentUserHand[el][1] === numOfDrawCard) {
-                console.log("no");
-                return false
-            }
+      for (let el = 0; el < currentUserHand.length; el++) {
+        if (currentUserHand[el][1] === "T") {
+          if (numOfDrawCard === 10) {
+            console.log("no");
+            return false;
           }
+        }
+        if (currentUserHand[el][1] === numOfDrawCard) {
+          console.log("no");
+          return false;
+        }
+      }
       const newInitCard = initialUserHand.slice();
       const selectedUserCard = newInitCard[numOfDrawCard - 1];
       drawCard.push(selectedUserCard);
@@ -246,13 +257,13 @@ console.log(currentPlayer);
       newDivforDrawCard.innerHTML = `<img src="pics/${selectedUserCard}.png" class="card-front"></img>`;
       drawnCardw2.appendChild(newDivforDrawCard);
     }
-    }
   }
+};
 /////////////////////////////////////////
-  //Comp Move 
+//Comp Move
 /////////////////////////////////////////
-  compPanCards () { 
-    if (currentPlayer === "comp") {
+const compPanCards = () => {
+  if (currentPlayer === "comp") {
     let joinDrawCard4 = drawCard.join("");
     const insideDrawCard4 = joinDrawCard4.split("");
 
@@ -260,7 +271,7 @@ console.log(currentPlayer);
     if (numOfDrawCard2 === "T") {
       numOfDrawCard2 = 10;
     }
-    
+
     if (numOfDrawCard2 === "J") {
       console.log("no");
     } else if (numOfDrawCard2 === "Q") {
@@ -268,20 +279,20 @@ console.log(currentPlayer);
     } else if (numOfDrawCard2 === "K") {
       console.log("no");
     } else if (drawCard.length === 0) {
-        console.log("Draw a card");
+      console.log("Draw a card");
     } else {
-        for (let el = 0; el < currentCompHand.length; el++) {
-            if (currentCompHand[el][1] === "T"){
-                if (numOfDrawCard2 === 10) {
-                    console.log("no");
-                    return false;
-                }
-            }
-            if (currentCompHand[el][1] === numOfDrawCard2) {
-                console.log("no");
-                return false
-            }
+      for (let el = 0; el < currentCompHand.length; el++) {
+        if (currentCompHand[el][1] === "T") {
+          if (numOfDrawCard2 === 10) {
+            console.log("no");
+            return false;
           }
+        }
+        if (currentCompHand[el][1] === numOfDrawCard2) {
+          console.log("no");
+          return false;
+        }
+      }
       const newInitCard2 = initialCompHand.slice();
       const selectedCompCard2 = newInitCard2[numOfDrawCard2 - 1];
       drawCard.push(selectedCompCard2);
@@ -306,23 +317,21 @@ console.log(currentPlayer);
       drawnCardw2.appendChild(newDivforDrawCard2);
     }
   }
-  }
-}
-
+};
 ///////////////////////////
 // GAME START
 //////////////////////////
-const deck1 = new Deck();
-deck1.shuffle();
-deck1.dealCards();
-deck1.chooseTurn (); 
+createdeckCards();
+/*deck1.*/shuffle();
+/*deck1.*/dealCards();
+/*deck1.*/chooseTurn();
 //////////////////////////
 const hands = () => {
   dealToUser();
   dealToComp();
-  deck1.creatingDeck();
+  creatingDeck();
   document.getElementById("drawButton").disabled = false;
-
+  document.getElementById("side").classList.add(currentPlayer);
 };
 const dealToComp = () => {
   for (let cardCount2 in initialCompHand) {
@@ -348,63 +357,105 @@ const dealToUser = () => {
     insertCardBack.innerHTML =
       '<img src="pics/card_back.png" class="card-back"> </img>';
   }
-
+};
+///////////////////////////////////////
+const checkingWinnerUser = () => {
+  if (currentUserHand.length === 10) {
+    for (let t in currentUserHand) {
+      let takoNumber = currentUserHand[t];
+      console.log(takoNumber);
+      const winnerWindowUser = document.getElementById(takoNumber);
+      winnerWindowUser.innerHTML = '<img src = "pics/takoyaki.png"></img>';
+    }
+    console.log("You win!");
+    return;
+  }
+};
+const checkingWinnerComp = () => {
+  if (currentCompHand.length === 10) {
+    for (let tt in currentCompHand) {
+      setInterval(() => {
+        let takoNumberComp = currentCompHand[tt];
+        const winnerWindowComp = document.getElementById(takoNumberComp);
+        winnerWindowComp.innerHTML = '<img src = "pics/takoyaki.png"></img>';
+      }),
+        300;
+    }
+    console.log("Computer win!");
+    return;
+  }
 };
 
-const checkingWinnerUser = () => {
-    if (currentUserHand.length === 10) {
-        for (let t in currentUserHand) {
-          let takoNumber = currentUserHand[t];
-          console.log(takoNumber)
-        const winnerWindowUser = document.getElementById(takoNumber);
-        winnerWindowUser.innerHTML = '<img src = "pics/takoyaki.png"></img>';
-        }
-        console.log("You win!");
-        return;
-    }
+const checkingDraw = () => {
+  if (deck.length === 0) {
+    console.log("DRAW")
+  }
 }
-const checkingWinnerComp = () => {
-    if (currentCompHand.length === 10) {
-      for (let tt in currentCompHand) {
-        setInterval(() => {
-        let takoNumberComp = currentCompHand[tt];
-      const winnerWindowComp = document.getElementById(takoNumberComp);
-      winnerWindowComp.innerHTML = '<img src = "pics/takoyaki.png"></img>';}
-      ), 300}
-        console.log("Computer win!");
-        return;
-    }  
+///////////////////////////////////// 
+// const compAuto = () => {
+//   if (currentPlayer === "comp") {
+//     drawCards();
+//     discardCards();
+//     compPanCards();
+// }}
 
-}
-
+// compAuto();
 ///////////////////////////
 // User Button Moves
 ///////////////////////////
 document.getElementById("startButton").addEventListener("click", hands);
 
 document.querySelector(".drawButton").addEventListener("click", () => {
-  deck1.drawCards();
+   drawCards();
 });
 
 document.querySelector(".discardCard").addEventListener("click", () => {
-  deck1.discardCards();
+  discardCards();
+  checkingDraw();
 });
 
 document.querySelector(".userPan").addEventListener("click", () => {
-    deck1.userPanCards();
-    checkingWinnerUser();
+  userPanCards();
+  checkingWinnerUser();
 });
 
 document.querySelector(".compPan").addEventListener("click", () => {
-    deck1.compPanCards();
-    checkingWinnerComp();   
-  });
+  compPanCards();
+  checkingWinnerComp();
+  checkingDraw();
+});
 
-//   const compAuto = () => {
-//   if (currentPlayer === "comp") {
-//     deck1.drawCards();
-//     deck1.discardCards();
-//     deck1.compPanCards();
-// }}
+document.getElementById("resetButton").addEventListener("click", () => {
+  const template = document.getElementById("table");
+  template.innerHTML = `
+  <div class="deck">
+    <button id="drawButton" class="drawButton" disabled="true;">
+      Draw
+    </button>
+  </div>
+  <div class="tako">
+    <img src="pics/tako.png" class="takochan" />
+  </div>
+  <div class="drawCard"></div>
+  <div class="discardCard"></div>
+  <div id="userPan" class="userPan">
+    <div class="userPanCards"></div>
+  </div>
+  <div id="compPan" class="compPan"></div>`;
+  document.getElementById("startButton").disabled = false;
+  deck = [];
+  initialUserHand = [];
+  currentUserHand = [];
+  initialCompHand = [];
+  currentCompHand = [];
+  drawCard = [];
+  discardedCards = [];
+  currentPlayer = "";
+  createdeckCards();
+    shuffle();
+    dealCards();
+    chooseTurn();
+    location.reload();
+});
 
-// compAuto();
+
