@@ -104,7 +104,7 @@ let currentPlayer = "";
       }
       // div全部にimg入れる
       let cardImageBack = document.createElement("img");
-      cardImageBack.setAttribute("src", "pics/card_back.png");
+      cardImageBack.setAttribute("src", "img/card_back.png");
       cardImageBack.setAttribute("class", "card-back");
       deckCards.appendChild(cardImageBack);
       document.querySelector(".deck").appendChild(deckCards);
@@ -133,7 +133,7 @@ let currentPlayer = "";
       const drawnCard = document
         .querySelector(".drawCard")
         .appendChild(toRemove);
-      drawnCard.innerHTML = `<img src="pics/${card}.png" class="card-front"></img>`;
+      drawnCard.innerHTML = `<img src="img/${card}.png" class="card-front"></img>`;
       drawnCard.classList.remove("deckcards");
       drawnCard.classList.add("drawCards");
       return deck;
@@ -162,7 +162,7 @@ const discardCards = () => {
       const discard = document
         .querySelector(".discardCard")
         .appendChild(toThrow);
-      discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
+      discard.innerHTML = `<img src="img/${cardD}.png" class="card-front"></img>`;
       discard.classList.remove("drawCards");
       discard.classList.add("discarded");
       const changeClass = document.getElementById("side");
@@ -185,7 +185,7 @@ const discardCards = () => {
       const discard = document
         .querySelector(".discardCard")
         .appendChild(toThrow);
-      discard.innerHTML = `<img src="pics/${cardD}.png" class="card-front"></img>`;
+      discard.innerHTML = `<img src="img/${cardD}.png" class="card-front"></img>`;
       discard.classList.remove("drawCards");
       discard.classList.add("discarded");
       const changeClass = document.getElementById("side");
@@ -245,7 +245,7 @@ const userPanCards = () => {
       const whereToInsertNewDiv = document.querySelector(".userPan");
       createNewDivForUser.setAttribute("id", currentDrawCard);
       createNewDivForUser.setAttribute("class", "userPanCards");
-      createNewDivForUser.innerHTML = `<img src="pics/${currentDrawCard}.png" class="card-front"></img>`;
+      createNewDivForUser.innerHTML = `<img src="img/${currentDrawCard}.png" class="card-front"></img>`;
       whereToInsertNewDiv.insertBefore(
         createNewDivForUser,
         whichDiv.children[numOfDrawCard - 1]
@@ -254,7 +254,7 @@ const userPanCards = () => {
       const newDivforDrawCard = document.createElement("div");
       const drawnCardw2 = document.querySelector(".drawCard");
       newDivforDrawCard.setAttribute("id", selectedUserCard);
-      newDivforDrawCard.innerHTML = `<img src="pics/${selectedUserCard}.png" class="card-front"></img>`;
+      newDivforDrawCard.innerHTML = `<img src="img/${selectedUserCard}.png" class="card-front"></img>`;
       drawnCardw2.appendChild(newDivforDrawCard);
     }
   }
@@ -304,7 +304,7 @@ const compPanCards = () => {
       const whereToInsertNewDiv = document.querySelector(".compPan");
       createNewDivForComp.setAttribute("id", currentDrawCard2);
       createNewDivForComp.setAttribute("class", "compPanCards");
-      createNewDivForComp.innerHTML = `<img src="pics/${currentDrawCard2}.png" class="card-front"></img>`;
+      createNewDivForComp.innerHTML = `<img src="img/${currentDrawCard2}.png" class="card-front"></img>`;
       whereToInsertNewDiv.insertBefore(
         createNewDivForComp,
         whichDiv.children[numOfDrawCard2 - 1]
@@ -313,7 +313,7 @@ const compPanCards = () => {
       const newDivforDrawCard2 = document.createElement("div");
       const drawnCardw2 = document.querySelector(".drawCard");
       newDivforDrawCard2.setAttribute("id", selectedCompCard2);
-      newDivforDrawCard2.innerHTML = `<img src="pics/${selectedCompCard2}.png" class="card-front"></img>`;
+      newDivforDrawCard2.innerHTML = `<img src="img/${selectedCompCard2}.png" class="card-front"></img>`;
       drawnCardw2.appendChild(newDivforDrawCard2);
     }
   }
@@ -341,9 +341,9 @@ const dealToComp = () => {
     // compCards.setAttribute("class", "cards");
     document.querySelector(".compPan").appendChild(compCards);
     const InsertCardFront = document.getElementById(tempNumber);
-    // InsertCardFront.innerHTML = `<img src="pics/${tempNumber}.png" class="card-front"></img>`
+    // InsertCardFront.innerHTML = `<img src="img/${tempNumber}.png" class="card-front"></img>`
     InsertCardFront.innerHTML =
-      '<img src="pics/card_back.png" class="card-back"> </img>';
+      '<img src="img/card_back.png" class="card-back"> </img>';
   }
 };
 const dealToUser = () => {
@@ -355,7 +355,7 @@ const dealToUser = () => {
     document.querySelector(".userPan").appendChild(usersCards);
     const insertCardBack = document.getElementById(initialUserHand[cardCount]);
     insertCardBack.innerHTML =
-      '<img src="pics/card_back.png" class="card-back"> </img>';
+      '<img src="img/card_back.png" class="card-back"> </img>';
   }
 };
 ///////////////////////////////////////
@@ -365,8 +365,12 @@ const checkingWinnerUser = () => {
       let takoNumber = currentUserHand[t];
       console.log(takoNumber);
       const winnerWindowUser = document.getElementById(takoNumber);
-      winnerWindowUser.innerHTML = '<img src = "pics/takoyaki.png"></img>';
+      winnerWindowUser.innerHTML = '<img src = "img/takoyaki.png"></img>';
     }
+    const winMsg = document.createElement('div')
+    winMsg.setAttribute("id", "userWin")
+    winMsg.innerText = "PLAYER1 WIN!"
+    document.getElementById("table").appendChild(winMsg)
     console.log("You win!");
     return;
   }
@@ -374,21 +378,27 @@ const checkingWinnerUser = () => {
 const checkingWinnerComp = () => {
   if (currentCompHand.length === 10) {
     for (let tt in currentCompHand) {
-      setInterval(() => {
         let takoNumberComp = currentCompHand[tt];
         const winnerWindowComp = document.getElementById(takoNumberComp);
-        winnerWindowComp.innerHTML = '<img src = "pics/takoyaki.png"></img>';
-      }),
-        300;
+        winnerWindowComp.innerHTML = '<img src = "img/takoyaki.png"></img>';
+      }
+      const winMsg = document.createElement('div')
+      winMsg.setAttribute("id", "compWin")
+      winMsg.innerText = "PLAYER2 WIN!"
+      document.getElementById("table").appendChild(winMsg)
     }
+    
     console.log("Computer win!");
     return;
-  }
 };
 
 const checkingDraw = () => {
   if (deck.length === 0) {
     console.log("DRAW")
+    const winMsg = document.createElement('div')
+    winMsg.setAttribute("id", "drawMsg")
+    winMsg.innerText = "TIE"
+    document.getElementById("table").appendChild(winMsg)
   }
 }
 ///////////////////////////////////// 
@@ -406,7 +416,7 @@ const checkingDraw = () => {
 document.getElementById("startButton").addEventListener("click", hands);
 
 document.querySelector(".drawButton").addEventListener("click", () => {
-   drawCards();
+drawCards();
 });
 
 document.querySelector(".discardCard").addEventListener("click", () => {
@@ -434,7 +444,7 @@ document.getElementById("resetButton").addEventListener("click", () => {
     </button>
   </div>
   <div class="tako">
-    <img src="pics/tako.png" class="takochan" />
+    <img src="img/tako.png" class="takochan" />
   </div>
   <div class="drawCard"></div>
   <div class="discardCard"></div>
