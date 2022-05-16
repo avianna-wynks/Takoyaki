@@ -1,4 +1,19 @@
 import "./style.css";
+import card_back from "./img/card_back.png"
+// import card_back from "./img/card_back.png"
+
+// var context = require.context('./img/', true, /\.(png)$/);
+// var files = {};
+
+context.keys().forEach((filename)=>{
+  files[filename] = context(filename);
+});
+console.log(files);
+
+
+// import imageURL from './images/image.png'
+
+// <img src="imageURL"/>
 
 let deck =[];
 let initialUserHand = [];
@@ -104,7 +119,7 @@ let currentPlayer = "";
       }
       // div全部にimg入れる
       let cardImageBack = document.createElement("img");
-      cardImageBack.setAttribute("src", "img/card_back.png");
+      cardImageBack.setAttribute("src", card_back);
       cardImageBack.setAttribute("class", "card-back");
       deckCards.appendChild(cardImageBack);
       document.querySelector(".deck").appendChild(deckCards);
