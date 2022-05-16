@@ -5,10 +5,10 @@ import card_back from "./img/card_back.png"
 // var context = require.context('./img/', true, /\.(png)$/);
 // var files = {};
 
-context.keys().forEach((filename)=>{
-  files[filename] = context(filename);
-});
-console.log(files);
+// context.keys().forEach((filename)=>{
+//   files[filename] = context(filename);
+// });
+// console.log(files);
 
 
 // import imageURL from './images/image.png'
