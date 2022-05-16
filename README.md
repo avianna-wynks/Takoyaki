@@ -11,9 +11,6 @@ CSS
 Javascript
 GitHub
 
-## Wireframe
-![This is an image] (img/Screenshot 2022-05-16 at 8.14.26 PM.png)
-
 ## Approach to Development
 1. Generate 52 Cards
 2. Placing cards with back image of the card
