@@ -1,14 +1,20 @@
 import "./style.css";
 import card_back from "./img/card_back.png"
-// import card_back from "./img/card_back.png"
+// import C1 from "./img/C1.png"
+// import C2 from "./img/C2.png"
+// import C3 from "./img/C3.png"
+// import C4 from "./img/C4.png"
+// import C5 from "./img/C5.png"
+// import C6 from "./img/C6.png"
+// import C7 from "./img/C7.png"
+// import C8 from "./img/C8.png"
+// import C9 from "./img/C9.png"
+// import CT from "./img/CT.png"
+// import CJ from "./img/CJ.png"
+// import CQ from "./img/CQ.png"
+// import CK from "./img/CK.png"
 
-// var context = require.context('./img/', true, /\.(png)$/);
-// var files = {};
 
-// context.keys().forEach((filename)=>{
-//   files[filename] = context(filename);
-// });
-// console.log(files);
 
 
 // import imageURL from './images/image.png'
@@ -356,9 +362,13 @@ const dealToComp = () => {
     // compCards.setAttribute("class", "cards");
     document.querySelector(".compPan").appendChild(compCards);
     const InsertCardFront = document.getElementById(tempNumber);
+    const insertImg = document.createElement('img');
+    insertImg.setAttribute("src", card_back);
+    insertImg.classList.add("card-back")
+    InsertCardFront.appendChild(insertImg);
     // InsertCardFront.innerHTML = `<img src="img/${tempNumber}.png" class="card-front"></img>`
-    InsertCardFront.innerHTML =
-      '<img src="img/card_back.png" class="card-back"> </img>';
+    // InsertCardFront.innerHTML =
+    //   '<img src= card_back class="card-back"> </img>';
   }
 };
 const dealToUser = () => {
@@ -369,8 +379,10 @@ const dealToUser = () => {
     usersCards.setAttribute("class", "userPanCards");
     document.querySelector(".userPan").appendChild(usersCards);
     const insertCardBack = document.getElementById(initialUserHand[cardCount]);
-    insertCardBack.innerHTML =
-      '<img src="img/card_back.png" class="card-back"> </img>';
+    const insertImg = document.createElement('img');
+    insertImg.setAttribute("src", card_back);
+    insertImg.classList.add("card-back")
+    insertCardBack.appendChild(insertImg);
   }
 };
 ///////////////////////////////////////
