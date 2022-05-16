@@ -19,7 +19,7 @@ GitHub
 4. Adding rules 
 
 ## Future Developments / Improvements
- Adding css to make it more intuitive 
- Computer auto play for player 2
- Add Joker card 
- To code in more efficient way
+ * Adding css to make it more intuitive 
+ * Computer auto play for player 2
+ * Add Joker card 
+ * To code in more efficient way
